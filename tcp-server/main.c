@@ -1,5 +1,9 @@
 /**
- * main.c
+ * @file main.c
+ * @author therealddx
+ * @summary
+ *   Basic TCP listener implementation, to service client connections.
+ *
  */
 
 #include <stdio.h>
