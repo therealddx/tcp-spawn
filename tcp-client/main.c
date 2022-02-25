@@ -14,6 +14,8 @@
 
 int main(int argc, char** argv)
 {
+  srand(getpid());
+
   // socket().
   // 
   int32_t tcp_client_fd  = socket(AF_INET, SOCK_STREAM, 0);
@@ -28,7 +30,7 @@ int main(int argc, char** argv)
   struct sockaddr_in tcp_client_sa;
   tcp_client_sa.sin_family = AF_INET;
   inet_pton(AF_INET, "127.0.0.1", &tcp_client_sa.sin_addr.s_addr);
-  tcp_client_sa.sin_port = htons((getpid() % 10000) + 10000);
+  tcp_client_sa.sin_port = htons((rand() % 10000) + 10000);
 
   // bind().
   //
