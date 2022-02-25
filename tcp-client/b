@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc main.c -o ../run-tcp-client
+gcc main.c -lpthread -o ../run-tcp-client
 
