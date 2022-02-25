@@ -1,8 +1,15 @@
+/**
+ * @file spawn.h
+ * @author therealddx
+ * @summary
+ *   Declares functions for spawning a TCP client and connecting to a remote host.
+ *
+ */
+
 #ifndef SPAWN_H
 #define SPAWN_H
 
 #include "stdinclude.h"
-#include <pthread.h>
 
 /**
  * spawn_and_connect

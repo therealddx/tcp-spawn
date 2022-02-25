@@ -1,3 +1,11 @@
+/**
+ * @file stdinclude.h
+ * @author therealddx
+ * @summary
+ *   Includes commonly-used C library headers.
+ *
+ */
+
 #ifndef STDINCLUDE_H
 #define STDINCLUDE_H
 
@@ -14,6 +22,8 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
+
+#include <pthread.h>
 
 #endif // STDINCLUDE_H
 

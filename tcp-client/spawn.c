@@ -1,7 +1,15 @@
+/**
+ * @file spawn.c
+ * @author therealddx
+ * @summary
+ *   Implements spawn.h
+ *
+ */
+
 #include "spawn.h"
 
 extern int32_t gl_verbose_error;
-static pthread_mutex_t gl_lock_connect;
+static pthread_mutex_t st_lock_connect;
 
 int32_t spawn_and_connect
   ( const char* arg_local_ipv4
@@ -138,7 +146,7 @@ int32_t spawn_and_connect_lock
   }
 
   // lock connect().
-  pthread_mutex_lock(&gl_lock_connect);
+  pthread_mutex_lock(&st_lock_connect);
 
   // connect() to the remote.
   //
@@ -161,7 +169,7 @@ int32_t spawn_and_connect_lock
   }
 
   // unlock connect().
-  pthread_mutex_unlock(&gl_lock_connect);
+  pthread_mutex_unlock(&st_lock_connect);
 
   // ret.
   return rtn_local_fd;

@@ -1,3 +1,12 @@
+/**
+ * @file spawn_many.h
+ * @author therealddx
+ * @summmary
+ *   Declares functions for repeatedly spawning many TCP clients, which in turn
+ *   establish connection to a remote host.
+ *
+ */
+
 #ifndef SPAWN_MASS_H
 #define SPAWN_MASS_H
 

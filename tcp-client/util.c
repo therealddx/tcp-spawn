@@ -1,7 +1,15 @@
-#include <stdint.h>
-#include <stdlib.h>
-#include <time.h>
+/**
+ * @file util.c
+ * @author therealddx
+ * @summary
+ *   Implements util.h
+ *
+ */
+
+#include "stdinclude.h"
 #include "util.h"
+
+int32_t gl_verbose_error = 1;
 
 void seed_random()
 {

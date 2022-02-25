@@ -1,16 +1,18 @@
-#include <stdio.h>
-#include <errno.h>
-#include <time.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <pthread.h>
+/**
+ * @file main.c
+ * @author therealddx
+ * @summary
+ *   Testbench for backing functions.
+ *
+ */
+
+#include "stdinclude.h"
 
 #include "util.h"
 #include "spawn.h"
 #include "spawn_many.h"
 
-int32_t gl_verbose_error = 1;
+extern int32_t gl_verbose_error;
 
 int main(int argc, char** argv)
 {

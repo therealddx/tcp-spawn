@@ -1,3 +1,12 @@
+/**
+ * @file util.h
+ * @author therealddx
+ * @summary
+ *   Utility functions specific to this library, but not directly relevant
+ *   to the contents of any other source file.
+ *
+ */
+
 #ifndef UTIL_H
 #define UTIL_H
 

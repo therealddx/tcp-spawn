@@ -1,3 +1,11 @@
+/**
+ * @file spawn_many.c
+ * @author therealddx
+ * @summary
+ *   Implements spawn_many.h
+ *
+ */
+
 #include "spawn_many.h"
 
 extern int32_t gl_verbose_error;
