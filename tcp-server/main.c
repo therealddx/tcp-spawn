@@ -28,6 +28,12 @@ int main(int argc, char** argv)
   }
   printf("tcp_server: socket: ok\n");
 
+  // setsockopt() to allow reuse.
+  //
+  int32_t reuse_enable = 1;
+  setsockopt(tcp_listen_fd, SOL_SOCKET, SO_REUSEADDR, &reuse_enable, sizeof(reuse_enable));
+  setsockopt(tcp_listen_fd, SOL_SOCKET, SO_REUSEPORT, &reuse_enable, sizeof(reuse_enable));
+
   // fill out 'struct sockaddr_in'.
   //
   struct sockaddr_in tcp_listen_sa;
