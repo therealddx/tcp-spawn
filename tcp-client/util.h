@@ -1,8 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <unistd.h>
-#include <sys/types.h>
+#include "stdinclude.h"
 
 /**
  * seed_random

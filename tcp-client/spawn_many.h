@@ -1,9 +1,7 @@
 #ifndef SPAWN_MASS_H
 #define SPAWN_MASS_H
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
+#include "stdinclude.h"
 #include "spawn.h"
 
 /**
