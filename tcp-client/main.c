@@ -14,10 +14,10 @@
 
 int32_t gl_verbose_error = 1;
 
-pthread_mutex_t gl_lock_socklib;
-// pthread_mutex_t gl_lock_socket;
-// pthread_mutex_t gl_lock_bind;
-// pthread_mutex_t gl_lock_connect;
+// pthread_mutex_t gl_lock_socklib;
+pthread_mutex_t gl_lock_socket;
+pthread_mutex_t gl_lock_bind;
+pthread_mutex_t gl_lock_connect;
 
 void seed_random()
 {
@@ -118,11 +118,11 @@ int32_t spawn_and_connect_lock
   //
   if ( (rtn_local_sa == NULL) || (rtn_remote_sa == NULL) ) { return -1; }
 
-  // lock global.
-  pthread_mutex_lock(&gl_lock_socklib);
+  // // lock global.
+  // pthread_mutex_lock(&gl_lock_socklib);
 
-  // // lock socket().
-  // pthread_mutex_lock(&gl_lock_socket);
+  // lock socket().
+  pthread_mutex_lock(&gl_lock_socket);
 
   // socket().
   // 
@@ -146,11 +146,11 @@ int32_t spawn_and_connect_lock
   setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEADDR, &reuse_enable, sizeof(reuse_enable));
   setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEPORT, &reuse_enable, sizeof(reuse_enable));
 
-  // // unlock socket().
-  // pthread_mutex_unlock(&gl_lock_socket);
+  // unlock socket().
+  pthread_mutex_unlock(&gl_lock_socket);
 
-  // // lock bind().
-  // pthread_mutex_lock(&gl_lock_bind);
+  // lock bind().
+  pthread_mutex_lock(&gl_lock_bind);
 
   // bind() to the local.
   //
@@ -172,11 +172,11 @@ int32_t spawn_and_connect_lock
     return error_bind;
   }
 
-  // // unlock bind().
-  // pthread_mutex_unlock(&gl_lock_bind);
+  // unlock bind().
+  pthread_mutex_unlock(&gl_lock_bind);
 
-  // // lock connect().
-  // pthread_mutex_lock(&gl_lock_connect);
+  // lock connect().
+  pthread_mutex_lock(&gl_lock_connect);
 
   // connect() to the remote.
   //
@@ -198,11 +198,11 @@ int32_t spawn_and_connect_lock
     return error_connect;
   }
 
-  // // unlock connect().
-  // pthread_mutex_unlock(&gl_lock_connect);
+  // unlock connect().
+  pthread_mutex_unlock(&gl_lock_connect);
 
-  // unlock global.
-  pthread_mutex_unlock(&gl_lock_socklib);
+  // // unlock global.
+  // pthread_mutex_unlock(&gl_lock_socklib);
 
   // ret.
   return rtn_local_fd;
