@@ -14,9 +14,8 @@
 
 int32_t gl_verbose_error = 1;
 
-// pthread_mutex_t gl_lock_socklib;
-pthread_mutex_t gl_lock_socket;
-pthread_mutex_t gl_lock_bind;
+// pthread_mutex_t gl_lock_socket;
+// pthread_mutex_t gl_lock_bind;
 pthread_mutex_t gl_lock_connect;
 
 void seed_random()
@@ -118,11 +117,8 @@ int32_t spawn_and_connect_lock
   //
   if ( (rtn_local_sa == NULL) || (rtn_remote_sa == NULL) ) { return -1; }
 
-  // // lock global.
-  // pthread_mutex_lock(&gl_lock_socklib);
-
-  // lock socket().
-  pthread_mutex_lock(&gl_lock_socket);
+  // // lock socket().
+  // pthread_mutex_lock(&gl_lock_socket);
 
   // socket().
   // 
@@ -146,11 +142,11 @@ int32_t spawn_and_connect_lock
   setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEADDR, &reuse_enable, sizeof(reuse_enable));
   setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEPORT, &reuse_enable, sizeof(reuse_enable));
 
-  // unlock socket().
-  pthread_mutex_unlock(&gl_lock_socket);
+  // // unlock socket().
+  // pthread_mutex_unlock(&gl_lock_socket);
 
-  // lock bind().
-  pthread_mutex_lock(&gl_lock_bind);
+  // // lock bind().
+  // pthread_mutex_lock(&gl_lock_bind);
 
   // bind() to the local.
   //
@@ -172,8 +168,8 @@ int32_t spawn_and_connect_lock
     return error_bind;
   }
 
-  // unlock bind().
-  pthread_mutex_unlock(&gl_lock_bind);
+  // // unlock bind().
+  // pthread_mutex_unlock(&gl_lock_bind);
 
   // lock connect().
   pthread_mutex_lock(&gl_lock_connect);
@@ -200,9 +196,6 @@ int32_t spawn_and_connect_lock
 
   // unlock connect().
   pthread_mutex_unlock(&gl_lock_connect);
-
-  // // unlock global.
-  // pthread_mutex_unlock(&gl_lock_socklib);
 
   // ret.
   return rtn_local_fd;
@@ -361,7 +354,7 @@ int main(int argc, char** argv)
   // spawn_serial(10, "127.0.0.1", "127.0.0.1", 44444);
   // spawn_serial(100, "192.168.0.10", "157.240.28.35", 443);
 
-  spawn_parallel(10, "127.0.0.1", "127.0.0.1", 44444, true);
+  spawn_parallel(1000, "127.0.0.1", "127.0.0.1", 44444, true);
   // spawn_parallel(100, "192.168.0.10", "157.240.28.35", 443);
 
   // ret.
