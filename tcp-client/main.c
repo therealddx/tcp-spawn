@@ -13,19 +13,13 @@
 
 int32_t gl_verbose_error = 1;
 
-/**
- * spawn_and_connect
- * 
- * @summary
- *   Spawns a TCP client, and binds the client to 'arg_local_ipv4:arg_local_port'.
- *   Connects the TCP client to the remote endpoint 'arg_remote_ipv4:arg_remote_port'.
- *
- * @return
- *   The 'struct sockaddr_in' of the local TCP client [return parameter]
- *   The 'struct sockaddr_in' of the remote TCP client [return parameter]
- *   The socket file descriptor of the local TCP client [return value]
- *
- */
+void seed_random()
+{
+  time_t cur_time;
+  time(&cur_time);
+  srand((uint32_t)(cur_time + getpid()));
+}
+
 int32_t spawn_and_connect
   ( const char* arg_local_ipv4
   , uint16_t arg_local_port
@@ -54,6 +48,12 @@ int32_t spawn_and_connect
     }
     return rtn_local_fd;
   }
+
+  // setsockopt() to allow reuse.
+  // 
+  int32_t reuse_enable = 1;
+  setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEADDR, &reuse_enable, sizeof(reuse_enable));
+  setsockopt(rtn_local_fd, SOL_SOCKET, SO_REUSEPORT, &reuse_enable, sizeof(reuse_enable));
 
   // bind() to the local.
   //
@@ -99,29 +99,50 @@ int32_t spawn_and_connect
   return rtn_local_fd;
 }
 
-/**
- * seed_random
- *
- * @summary Function to wrap srand(), to ensure that it receives a different
- * value on every invocation of this program.
- *
- */
-void seed_random()
+int32_t spawn_mass
+  ( uint64_t arg_num_spawn
+  , const char* arg_local_ipv4
+  , const char* arg_remote_ipv4
+  , uint16_t arg_remote_port
+  )
 {
-  time_t cur_time;
-  time(&cur_time);
-  srand((uint32_t)(cur_time + getpid()));
+  // vars.
+  uint64_t n_sp = 0;
+  uint16_t local_port = 0;
+  int32_t rtn_spawn_error = 0;
+  struct sockaddr_in local_sa;
+  struct sockaddr_in remote_sa;
+
+  // spawn in serial.
+  for (n_sp = 0; n_sp < arg_num_spawn; n_sp++)
+  {
+    rtn_spawn_error = spawn_and_connect(
+      arg_local_ipv4, 10000 + n_sp, arg_remote_ipv4, arg_remote_port, &local_sa, &remote_sa);
+
+    if (rtn_spawn_error < 0)
+    {
+      if (gl_verbose_error < 0)
+      {
+        printf("spawn_and_connect: error '%d'\n", rtn_spawn_error);
+      }
+    }
+  }
+
+  // ret.
+  return rtn_spawn_error;
 }
 
 int main(int argc, char** argv)
 {
   seed_random();
 
-  // bind at 127.0.0.1:<rand()>, and connect to 127.0.0.1:44444.
-  struct sockaddr_in local_sa;
-  struct sockaddr_in remote_sa;
-  int32_t local_fd = spawn_and_connect(
-    "127.0.0.1", (rand() % 10000) + 10000, "127.0.0.1", 44444, &local_sa, &remote_sa);
+  // // bind at 127.0.0.1:<rand()>, and connect to 127.0.0.1:44444.
+  // struct sockaddr_in local_sa;
+  // struct sockaddr_in remote_sa;
+  // int32_t local_fd = spawn_and_connect(
+  //   "127.0.0.1", (rand() % 10000) + 10000, "127.0.0.1", 44444, &local_sa, &remote_sa);
+
+  spawn_mass(10000, "127.0.0.1", "127.0.0.1", 44444);
 
   // ret.
   return 0;

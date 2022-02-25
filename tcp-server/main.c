@@ -12,6 +12,9 @@
 
 int main(int argc, char** argv)
 {
+  // vars.
+  uint32_t n_clients = 0;
+
   // socket().
   // 
   int32_t tcp_listen_fd  = socket(AF_INET, SOCK_STREAM, 0);
@@ -63,7 +66,11 @@ int main(int argc, char** argv)
 
     char client_ipv4[256];
     inet_ntop(AF_INET, &tcp_client_sa.sin_addr.s_addr, client_ipv4, sizeof(client_ipv4));
-    printf("tcp_server: accept: accepted client at %s:%d\n", client_ipv4, ntohs(tcp_client_sa.sin_port));
+    printf("[%d]: tcp_server: accept: accepted client at %s:%d\n"
+      , ++n_clients
+      , client_ipv4
+      , ntohs(tcp_client_sa.sin_port)
+      );
   }
 
   // ret.
