@@ -1,6 +1,9 @@
 #ifndef SPAWN_H
 #define SPAWN_H
 
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/types.h>

@@ -3,5 +3,7 @@
 gcc \
   main.c \
   util.c \
+  spawn.c \
+  spawn_many.c \
   -lpthread -o ../run-tcp-client
 
