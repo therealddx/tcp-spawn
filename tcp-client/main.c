@@ -99,7 +99,7 @@ int32_t spawn_and_connect
   return rtn_local_fd;
 }
 
-int32_t spawn_mass
+int32_t spawn_serial
   ( uint64_t arg_num_spawn
   , const char* arg_local_ipv4
   , const char* arg_remote_ipv4
@@ -121,7 +121,7 @@ int32_t spawn_mass
 
     if (rtn_spawn_error < 0)
     {
-      if (gl_verbose_error < 0)
+      if (gl_verbose_error)
       {
         printf("spawn_and_connect: error '%d'\n", rtn_spawn_error);
       }
@@ -134,15 +134,22 @@ int32_t spawn_mass
 
 int main(int argc, char** argv)
 {
+  // seed random.
   seed_random();
 
-  // // bind at 127.0.0.1:<rand()>, and connect to 127.0.0.1:44444.
-  // struct sockaddr_in local_sa;
-  // struct sockaddr_in remote_sa;
+  struct sockaddr_in local_sa;
+  struct sockaddr_in remote_sa;
   // int32_t local_fd = spawn_and_connect(
   //   "127.0.0.1", (rand() % 10000) + 10000, "127.0.0.1", 44444, &local_sa, &remote_sa);
+  // int32_t local_fd = spawn_and_connect(
+  //   "192.168.0.10", (rand() % 10000) + 10000, "157.240.28.35", 443, &local_sa, &remote_sa);
 
-  spawn_mass(10000, "127.0.0.1", "127.0.0.1", 44444);
+  // useful IPs:
+  // 127.0.0.1:44444 is `tcp-server`
+  // 157.240.28.35:443 is `facebook.com`
+  // 
+  // spawn_serial(10, "127.0.0.1", "127.0.0.1", 44444);
+  spawn_serial(100, "192.168.0.10", "157.240.28.35", 443);
 
   // ret.
   return 0;

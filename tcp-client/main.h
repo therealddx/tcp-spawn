@@ -41,7 +41,7 @@ int32_t spawn_and_connect
   );
 
 /**
- * spawn_mass
+ * spawn_serial
  *
  * @summary
  *   Calls `spawn_and_connect` for 'arg_num_spawn' TCP clients, in serial.
@@ -52,7 +52,7 @@ int32_t spawn_and_connect
  * @return
  *   The return value of the final `spawn_and_connect` call.
  */
-int32_t spawn_mass
+int32_t spawn_serial
   ( uint64_t arg_num_spawn
   , const char* arg_local_ipv4
   , const char* arg_remote_ipv4
