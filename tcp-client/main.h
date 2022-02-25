@@ -11,15 +11,6 @@
 #include <arpa/inet.h>
 
 /**
- * seed_random
- *
- * @summary Function to wrap srand(), to ensure that it receives a different
- * value on every invocation of this program.
- *
- */
-void seed_random();
-
-/**
  * spawn_and_connect
  * 
  * @summary

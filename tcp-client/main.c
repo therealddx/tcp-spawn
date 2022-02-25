@@ -16,13 +16,6 @@ int32_t gl_verbose_error = 1;
 
 pthread_mutex_t gl_lock_connect;
 
-void seed_random()
-{
-  time_t cur_time;
-  time(&cur_time);
-  srand((uint32_t)(cur_time + getpid()));
-}
-
 int32_t spawn_and_connect
   ( const char* arg_local_ipv4
   , uint16_t arg_local_port
